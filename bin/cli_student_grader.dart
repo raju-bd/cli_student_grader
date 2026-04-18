@@ -175,14 +175,17 @@ void main(List<String> arguments) {
         stdout.write("Select a student by number: ");
         String? studentChoice = stdin.readLineSync();
         int studentIndex = int.parse(studentChoice!) - 1;
+        double rawAvg = (studentList[studentIndex]['scores'] as List).isNotEmpty ? (studentList[studentIndex]['scores'] as List).reduce((a, b) => a + b) / (studentList[studentIndex]['scores'] as List).length : 0;
+        double finalAvg = rawAvg + (studentList[studentIndex]['bonus'] ?? 0);
+
         print('''
           ╔══════════════════════════════╗
           ║       REPORT CARD            ║
           ╠══════════════════════════════╝
-          ║  Name:    ${studentList[studentIndex]['name']}            ║
+          ║  Name:    ${studentList[studentIndex]['name']}              ║
           ║  Scores:  ${studentList[studentIndex]['scores']}      ║
           ║  Bonus:   ${studentList[studentIndex]['bonus'] ?? 'None'}                ║
-          ║  Average: ${studentList[studentIndex]['average'] ?? 'None'}               ║
+          ║  Average: ${finalAvg.toStringAsFixed(1)}               ║
           ║  Grade:   ${studentList[studentIndex]['grade'] ?? 'None'}                  ║
           ║  Comment: ${studentList[studentIndex]['comment'] ?? 'None'}  ║
           ╚══════════════════════════════╝
