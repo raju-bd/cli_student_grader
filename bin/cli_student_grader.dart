@@ -61,7 +61,7 @@ void main(List<String> arguments) {
 
         break; //case 1: Add Student
       case '2':
-      //Select Student
+        //Select Student
         for (int i = 0; i < studentList.length; i++) {
           print("${i + 1}. ${studentList[i]['name']}");
         }
@@ -98,7 +98,7 @@ void main(List<String> arguments) {
 
         break; //Case 2: Record Score
       case '3':
-       //Select Student
+        //Select Student
         for (int i = 0; i < studentList.length; i++) {
           print("${i + 1}. ${studentList[i]['name']}");
         }
@@ -118,7 +118,6 @@ void main(List<String> arguments) {
             if (bonusPoints >= 0 && bonusPoints <= 10) {
               if (studentList[studentIndex]['bonus'] == null) {
                 studentList[studentIndex]['bonus'] ??= bonusPoints;
-  
               } else {
                 print("Bonus already assigned. Updating bonus points...");
               }
@@ -126,7 +125,9 @@ void main(List<String> arguments) {
               print('Add Student: $studentList');
               break;
             } else {
-              print("Invalid bonus points. Please enter a number between 0 and 10.");
+              print(
+                "Invalid bonus points. Please enter a number between 0 and 10.",
+              );
             }
           } else {
             print("Invalid student selection. Please try again.");
@@ -136,14 +137,14 @@ void main(List<String> arguments) {
         print('Add Bonus Points');
         break; //Case 3: Add Bonus Points
       case '4':
-          //Select Student
+        //Select Student
         for (int i = 0; i < studentList.length; i++) {
           print("${i + 1}. ${studentList[i]['name']}");
         }
         stdout.write("Select a student by number: ");
         String? studentChoice = stdin.readLineSync();
-        int studentIndex = int.parse(studentChoice!) - 1; 
-        print("Selected Student: ${studentList[studentIndex]['name']}");  
+        int studentIndex = int.parse(studentChoice!) - 1;
+        print("Selected Student: ${studentList[studentIndex]['name']}");
         stdout.write("Enter comment: ");
         String? commentInput = stdin.readLineSync();
         studentList[studentIndex]['comment'] = commentInput;
@@ -151,32 +152,60 @@ void main(List<String> arguments) {
 
         break; //case 4: Add Comment
       case '5':
-      print("\n===== ALL STUDENTS =====");
+        print("\n===== ALL STUDENTS =====");
 
         // for-in loop
         for (var student in studentList) {
-
           // collection if inside list
           var tags = [
             student["name"],
             "${(student["scores"] as List).length} scores",
-            if (student["bonus"] != null) "⭐ Has Bonus"
+            if (student["bonus"] != null) "⭐ Has Bonus",
           ];
 
           print(tags.join(" | "));
         }
-  
+
         break; //case 5: View All Students
       case '6':
-      print("Select a student to view report card:");
+        print("Select a student to view report card:");
         for (int i = 0; i < studentList.length; i++) {
           print("${i + 1}. ${studentList[i]['name']}");
         }
         stdout.write("Select a student by number: ");
         String? studentChoice = stdin.readLineSync();
         int studentIndex = int.parse(studentChoice!) - 1;
-        double rawAvg = (studentList[studentIndex]['scores'] as List).isNotEmpty ? (studentList[studentIndex]['scores'] as List).reduce((a, b) => a + b) / (studentList[studentIndex]['scores'] as List).length : 0;
+        double rawAvg = (studentList[studentIndex]['scores'] as List).isNotEmpty
+            ? (studentList[studentIndex]['scores'] as List).reduce(
+                    (a, b) => a + b,
+                  ) /
+                  (studentList[studentIndex]['scores'] as List).length
+            : 0;
         double finalAvg = rawAvg + (studentList[studentIndex]['bonus'] ?? 0);
+        if (finalAvg > 100) finalAvg = 100;
+
+        String grade;
+
+        if (finalAvg >= 90) {
+          grade = "A";
+        } else if (finalAvg >= 80) {
+          grade = "B";
+        } else if (finalAvg >= 70) {
+          grade = "C";
+        } else if (finalAvg >= 60) {
+          grade = "D";
+        } else {
+          grade = "F";
+        }
+
+        String feedback = switch (grade) {
+          "A" => "Outstanding performance!",
+          "B" => "Good work, keep it up!",
+          "C" => "Satisfactory. Room to improve.",
+          "D" => "Needs improvement.",
+          "F" => "Failing. Please seek help.",
+          _ => "Unknown grade.",
+        };
 
         print('''
           ╔══════════════════════════════╗
@@ -186,16 +215,12 @@ void main(List<String> arguments) {
           ║  Scores:  ${studentList[studentIndex]['scores']}      ║
           ║  Bonus:   ${studentList[studentIndex]['bonus'] ?? 'None'}                ║
           ║  Average: ${finalAvg.toStringAsFixed(1)}               ║
-          ║  Grade:   ${studentList[studentIndex]['grade'] ?? 'None'}                  ║
+          ║  Grade:   $grade                  ║
           ║  Comment: ${studentList[studentIndex]['comment'] ?? 'None'}  ║
           ╚══════════════════════════════╝
         ''');
-        print("Report Card for ${studentList[studentIndex]['name']}:");
-        print("Scores: ${studentList[studentIndex]['scores']}");
-        print("Bonus Points: ${studentList[studentIndex]['bonus'] ?? 'None'}");
-        print("Comments: ${studentList[studentIndex]['comment'] ?? 'None'}"); 
+        print('Feedback : $feedback\n');
 
-        print('View Report Card');
         break; //case 6: View Report Card
       case '7':
         print('Class Summary');
@@ -207,7 +232,6 @@ void main(List<String> arguments) {
         print('Invalid option. Please try again.');
     }
   } while (userInput ?? 0 < 8);
-
 
   // print(menu);
 
