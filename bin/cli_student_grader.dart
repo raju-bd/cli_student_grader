@@ -165,9 +165,33 @@ void main(List<String> arguments) {
 
           print(tags.join(" | "));
         }
-        print('View All Students');
+  
         break; //case 5: View All Students
       case '6':
+      print("Select a student to view report card:");
+        for (int i = 0; i < studentList.length; i++) {
+          print("${i + 1}. ${studentList[i]['name']}");
+        }
+        stdout.write("Select a student by number: ");
+        String? studentChoice = stdin.readLineSync();
+        int studentIndex = int.parse(studentChoice!) - 1;
+        print('''
+          ╔══════════════════════════════╗
+          ║       REPORT CARD            ║
+          ╠══════════════════════════════╝
+          ║  Name:    ${studentList[studentIndex]['name']}            ║
+          ║  Scores:  ${studentList[studentIndex]['scores']}      ║
+          ║  Bonus:   ${studentList[studentIndex]['bonus'] ?? 'None'}                ║
+          ║  Average: ${studentList[studentIndex]['average'] ?? 'None'}               ║
+          ║  Grade:   ${studentList[studentIndex]['grade'] ?? 'None'}                  ║
+          ║  Comment: ${studentList[studentIndex]['comment'] ?? 'None'}  ║
+          ╚══════════════════════════════╝
+        ''');
+        print("Report Card for ${studentList[studentIndex]['name']}:");
+        print("Scores: ${studentList[studentIndex]['scores']}");
+        print("Bonus Points: ${studentList[studentIndex]['bonus'] ?? 'None'}");
+        print("Comments: ${studentList[studentIndex]['comment'] ?? 'None'}"); 
+
         print('View Report Card');
         break; //case 6: View Report Card
       case '7':
