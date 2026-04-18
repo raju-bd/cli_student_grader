@@ -77,9 +77,15 @@ void main(List<String> arguments) {
         // String? subjectChoice = stdin.readLineSync();
         // int subjectIndex = int.parse(subjectChoice!) - 1;
         // String selectedSubject = studentList[studentIndex]['subjects'].elementAt(subjectIndex);
-        stdout.write("Enter score : ");
+        stdout.write("Enter score (0-100): ");
         String? scoreInput = stdin.readLineSync();
         int score = int.parse(scoreInput!);
+
+        if (score < 0 || score > 100) {
+          print("Invalid score. Please enter a number between 0 and 100.");
+          break;
+        } 
+        
         studentList[studentIndex]['scores'].add(score);
         print('Add Student: $studentList');
 
