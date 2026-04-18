@@ -151,6 +151,20 @@ void main(List<String> arguments) {
 
         break; //case 4: Add Comment
       case '5':
+      print("\n===== ALL STUDENTS =====");
+
+        // for-in loop
+        for (var student in studentList) {
+
+          // collection if inside list
+          var tags = [
+            student["name"],
+            "${(student["scores"] as List).length} scores",
+            if (student["bonus"] != null) "⭐ Has Bonus"
+          ];
+
+          print(tags.join(" | "));
+        }
         print('View All Students');
         break; //case 5: View All Students
       case '6':
