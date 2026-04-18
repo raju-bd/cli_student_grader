@@ -1,5 +1,6 @@
 //import 'package:cli_student_grader/cli_student_grader.dart' as clisg;
 import 'dart:io';
+import 'dart:math';
 
 void main(List<String> arguments) {
   const appTitle = 'Student Grader v1.0';
@@ -59,7 +60,7 @@ void main(List<String> arguments) {
         print("Bonus: ${studentList.last['bonus']}");
         print("Comment: ${studentList.last['comment']}");
 
-        break;
+        break;//case 1: Add Student
       case '2':
         for (int i = 0; i < studentList.length; i++) {
           print("${i + 1}. ${studentList[i]['name']}");
@@ -77,38 +78,44 @@ void main(List<String> arguments) {
         // String? subjectChoice = stdin.readLineSync();
         // int subjectIndex = int.parse(subjectChoice!) - 1;
         // String selectedSubject = studentList[studentIndex]['subjects'].elementAt(subjectIndex);
+        
+        while(true) {
+
         stdout.write("Enter score (0-100): ");
         String? scoreInput = stdin.readLineSync();
         int score = int.parse(scoreInput!);
 
-        if (score < 0 || score > 100) {
-          print("Invalid score. Please enter a number between 0 and 100.");
-          break;
-        } 
-        
+        if (score > 0 && score <= 100) {
         studentList[studentIndex]['scores'].add(score);
-        print('Add Student: $studentList');
+                print('Add Student: $studentList');
+                break;  
+        } else {
+         print("Invalid score. Please enter a number between 0 and 100.");
+        }
+
+        }
+        
 
         print('Record Score');
-        break;
+        break;//Case 2: Record Score
       case '3':
         print('Add Bonus Points');
-        break;
+        break;//Case 3: Add Bonus Points
       case '4':
         print('Add Comment');
-        break;
+        break;//case 4: Add Comment
       case '5':
         print('View All Students');
-        break;
+        break;//case 5: View All Students
       case '6':
         print('View Report Card');
-        break;
+        break;//case 6: View Report Card
       case '7':
         print('Class Summary');
-        break;
+        break;//case 7: Class Summary
       case '8':
         print('Exiting...');
-        break;
+        break;//case 8: Exit
       default:
         print('Invalid option. Please try again.');
     }
