@@ -34,7 +34,6 @@ void main(List<String> arguments) {
 
     print(userInput);
     switch (userInput) {
-
       case '1': //Add Student
 
         Map<String, dynamic> student = {};
@@ -60,68 +59,114 @@ void main(List<String> arguments) {
         print("Bonus: ${studentList.last['bonus']}");
         print("Comment: ${studentList.last['comment']}");
 
-        break;//case 1: Add Student
+        break; //case 1: Add Student
       case '2':
+      //Select Student
         for (int i = 0; i < studentList.length; i++) {
           print("${i + 1}. ${studentList[i]['name']}");
-          print("------");
         }
+
         stdout.write("Select a student by number: ");
         String? studentChoice = stdin.readLineSync();
         int studentIndex = int.parse(studentChoice!) - 1;
         print("Selected Student: ${studentList[studentIndex]['subjects']}");
 
-        for(int i = 0; i < studentList[studentIndex]['subjects'].length; i++) {
-          print("${i + 1}. ${studentList[studentIndex]['subjects'].elementAt(i)}");
+        for (int i = 0; i < studentList[studentIndex]['subjects'].length; i++) {
+          print(
+            "${i + 1}. ${studentList[studentIndex]['subjects'].elementAt(i)}",
+          );
         }
         // stdout.write("Select a subject by number: ");
         // String? subjectChoice = stdin.readLineSync();
         // int subjectIndex = int.parse(subjectChoice!) - 1;
         // String selectedSubject = studentList[studentIndex]['subjects'].elementAt(subjectIndex);
-        
-        while(true) {
 
-        stdout.write("Enter score (0-100): ");
-        String? scoreInput = stdin.readLineSync();
-        int score = int.parse(scoreInput!);
+        while (true) {
+          stdout.write("Enter score (0-100): ");
+          String? scoreInput = stdin.readLineSync();
+          int score = int.parse(scoreInput!);
 
-        if (score > 0 && score <= 100) {
-        studentList[studentIndex]['scores'].add(score);
-                print('Add Student: $studentList');
-                break;  
-        } else {
-         print("Invalid score. Please enter a number between 0 and 100.");
+          if (score > 0 && score <= 100) {
+            studentList[studentIndex]['scores'].add(score);
+            print("Score($score) added successfully!");
+            print('Add Student: $studentList');
+            break;
+          } else {
+            print("Invalid score. Please enter a number between 0 and 100.");
+          }
         }
 
-        }
-        
-
-        print('Record Score');
-        break;//Case 2: Record Score
+        break; //Case 2: Record Score
       case '3':
+       //Select Student
+        for (int i = 0; i < studentList.length; i++) {
+          print("${i + 1}. ${studentList[i]['name']}");
+        }
+
+        while (true) {
+          stdout.write("Select a student by number: ");
+          String? studentChoice = stdin.readLineSync();
+          int studentIndex = int.parse(studentChoice!) - 1;
+
+          if (studentIndex >= 0 && studentIndex < studentList.length) {
+            print("Selected Student: ${studentList[studentIndex]['name']}");
+
+            stdout.write("Enter bonus points (0-10): ");
+            String? bonusInput = stdin.readLineSync();
+            int bonusPoints = int.parse(bonusInput!);
+
+            if (bonusPoints >= 0 && bonusPoints <= 10) {
+              if (studentList[studentIndex]['bonus'] == null) {
+                studentList[studentIndex]['bonus'] ??= bonusPoints;
+  
+              } else {
+                print("Bonus already assigned. Updating bonus points...");
+              }
+              print("Bonus points($bonusPoints) added successfully!");
+              print('Add Student: $studentList');
+              break;
+            } else {
+              print("Invalid bonus points. Please enter a number between 0 and 10.");
+            }
+          } else {
+            print("Invalid student selection. Please try again.");
+          }
+        }
+
         print('Add Bonus Points');
-        break;//Case 3: Add Bonus Points
+        break; //Case 3: Add Bonus Points
       case '4':
-        print('Add Comment');
-        break;//case 4: Add Comment
+          //Select Student
+        for (int i = 0; i < studentList.length; i++) {
+          print("${i + 1}. ${studentList[i]['name']}");
+        }
+        stdout.write("Select a student by number: ");
+        String? studentChoice = stdin.readLineSync();
+        int studentIndex = int.parse(studentChoice!) - 1; 
+        print("Selected Student: ${studentList[studentIndex]['name']}");  
+        stdout.write("Enter comment: ");
+        String? commentInput = stdin.readLineSync();
+        studentList[studentIndex]['comment'] = commentInput;
+        print("Comment added successfully!");
+
+        break; //case 4: Add Comment
       case '5':
         print('View All Students');
-        break;//case 5: View All Students
+        break; //case 5: View All Students
       case '6':
         print('View Report Card');
-        break;//case 6: View Report Card
+        break; //case 6: View Report Card
       case '7':
         print('Class Summary');
-        break;//case 7: Class Summary
+        break; //case 7: Class Summary
       case '8':
         print('Exiting...');
-        break;//case 8: Exit
+        break; //case 8: Exit
       default:
         print('Invalid option. Please try again.');
     }
   } while (userInput ?? 0 < 8);
 
-  print('Hello world: $appTitle');
 
   // print(menu);
 
